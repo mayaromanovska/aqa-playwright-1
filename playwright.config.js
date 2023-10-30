@@ -34,7 +34,7 @@ const config = defineConfig({
       password: "welcome2qauto",
     },
     /* Base URL to use in actions like `await page.goto('/')`. */
-    baseURL: "https://guest:welcome2qauto@qauto.forstudy.space",
+    baseURL: "https://guest:welcomeqauto@qauto.forstudy.space",
     viewport: {
       width: 1200,
       height: 840,

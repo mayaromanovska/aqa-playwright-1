@@ -2,7 +2,7 @@ import { expect, test } from "@playwright/test";
 
 const name = "aqamay";
 const lastName = "aqarom";
-const email = "aqa-rom5@gmail.com";
+const email = "aqa-rom7@gmail.com";
 const password = "Password1";
 const repeatPassword = password;
 // empty fields errors
@@ -93,7 +93,7 @@ test.describe("Registration", () => {
     await profileOption.click();
 
     const userInfo = page.locator("p.profile_name.display-4");
-    expect(await userInfo.innerText()).toEqual(name + " " + lastName);
+    await expect(userInfo).toHaveText(name + " " + lastName);
   });
 
   // #2 Fields are mandatory
@@ -131,25 +131,23 @@ test.describe("Registration", () => {
     await emailInput.click();
     await passwordInput.click();
     await repeatPasswordInput.click();
-    await passwordInput.click();
+    await repeatPasswordInput.blur();
 
     let errorLabel;
     errorLabel = popupRegistration.locator("form > div:nth-child(1) > div > p");
-    expect(await errorLabel.innerText()).toEqual(errorNameRequiredText);
+    await expect(errorLabel).toHaveText(errorNameRequiredText);
 
     errorLabel = popupRegistration.locator("form > div:nth-child(2) > div > p");
-    expect(await errorLabel.innerText()).toEqual(errorLastNameRequiredText);
+    await expect(errorLabel).toHaveText(errorLastNameRequiredText);
 
     errorLabel = popupRegistration.locator("form > div:nth-child(3) > div > p");
-    expect(await errorLabel.innerText()).toEqual(errorEmailRequiredText);
+    await expect(errorLabel).toHaveText(errorEmailRequiredText);
 
     errorLabel = popupRegistration.locator("form > div:nth-child(4) > div > p");
-    expect(await errorLabel.innerText()).toEqual(errorPasswordRequiredText);
+    await expect(errorLabel).toHaveText(errorPasswordRequiredText);
 
     errorLabel = popupRegistration.locator("form > div:nth-child(5) > div > p");
-    expect(await errorLabel.innerText()).toEqual(
-      errorRepeatPasswordRequiredText
-    );
+    await expect(errorLabel).toHaveText(errorRepeatPasswordRequiredText);
   });
 
   // #3 Fields should contain correct values
@@ -187,25 +185,23 @@ test.describe("Registration", () => {
     await emailInput.fill(incorrectEmail);
     await passwordInput.fill(incorrectPassword);
     await repeatPasswordInput.fill(incorrectRepeatPassword);
-    await passwordInput.click();
+    await repeatPasswordInput.blur();
 
     let errorLabel;
     errorLabel = popupRegistration.locator("form > div:nth-child(1) > div > p");
-    expect(await errorLabel.innerText()).toEqual(errorIncorrectNameText);
+    await expect(errorLabel).toHaveText(errorIncorrectNameText);
 
     errorLabel = popupRegistration.locator("form > div:nth-child(2) > div > p");
-    expect(await errorLabel.innerText()).toEqual(errorIncorrectLastNameText);
+    await expect(errorLabel).toHaveText(errorIncorrectLastNameText);
 
     errorLabel = popupRegistration.locator("form > div:nth-child(3) > div > p");
-    expect(await errorLabel.innerText()).toEqual(errorIncorrectEmailText);
+    await expect(errorLabel).toHaveText(errorIncorrectEmailText);
 
     errorLabel = popupRegistration.locator("form > div:nth-child(4) > div > p");
-    expect(await errorLabel.innerText()).toEqual(errorIncorrectPasswordText);
+    await expect(errorLabel).toHaveText(errorIncorrectPasswordText);
 
     errorLabel = popupRegistration.locator("form > div:nth-child(5) > div > p");
-    expect(await errorLabel.innerText()).toEqual(
-      errorIncorrectRepeatPasswordText
-    );
+    await expect(errorLabel).toHaveText(errorIncorrectRepeatPasswordText);
   });
 
   // #4 Fields values should has correct length
@@ -241,26 +237,20 @@ test.describe("Registration", () => {
     await lastNameInput.fill(incorrectLastNameLength);
     await passwordInput.fill(incorrectPasswordLength);
     await repeatPasswordInput.fill(incorrectRepeatPasswordLength);
-    await passwordInput.click();
+    await repeatPasswordInput.blur();
 
     let errorLabel;
     errorLabel = popupRegistration.locator("form > div:nth-child(1) > div > p");
-    expect(await errorLabel.innerText()).toEqual(errorIncorrectNameLengthText);
+    await expect(errorLabel).toHaveText(errorIncorrectNameLengthText);
 
     errorLabel = popupRegistration.locator("form > div:nth-child(2) > div > p");
-    expect(await errorLabel.innerText()).toEqual(
-      errorIncorrectLastNameLengthText
-    );
+    await expect(errorLabel).toHaveText(errorIncorrectLastNameLengthText);
 
     errorLabel = popupRegistration.locator("form > div:nth-child(4) > div > p");
-    expect(await errorLabel.innerText()).toEqual(
-      errorIncorrectPasswordLengthText
-    );
+    await expect(errorLabel).toHaveText(errorIncorrectPasswordLengthText);
 
     errorLabel = popupRegistration.locator("form > div:nth-child(5) > div > p");
-    expect(await errorLabel.innerText()).toEqual(
-      errorIncorrectRepeatPasswordLengthText
-    );
+    await expect(errorLabel).toHaveText(errorIncorrectRepeatPasswordLengthText);
   });
 
   // #5 Passwords do not match
@@ -292,12 +282,10 @@ test.describe("Registration", () => {
 
     await passwordInput.fill(password);
     await repeatPasswordInput.fill(repeatPasswordNotSame);
-    await passwordInput.click();
+    await repeatPasswordInput.blur();
 
     let errorLabel;
     errorLabel = popupRegistration.locator("form > div:nth-child(5) > div > p");
-    expect(await errorLabel.innerText()).toEqual(
-      errorPasswordLengthNotSameText
-    );
+    await expect(errorLabel).toHaveText(errorPasswordLengthNotSameText);
   });
 });

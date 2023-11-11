@@ -7,7 +7,7 @@ import SettingsPage from "../../src/pageObjects/settingsPage/SettingsPage.js";
 
 const name = "aqamay";
 const lastName = "aqarom";
-const email = "aqa-rom@gmail.com";
+const email = "aqa-rom02@gmail.com";
 const password = "Password1";
 const repeatPassword = password;
 
@@ -78,7 +78,7 @@ test.describe("Registration fuctionality", () => {
   });
 
   // #1 Register User with correct data
-  test("Register User with correct data", async () => {
+  test.only("Register User with correct data", async () => {
     await registrationPopup.fillOutFields(
       name,
       lastName,
@@ -93,7 +93,6 @@ test.describe("Registration fuctionality", () => {
     await menuDropDown.clickMenuOption(menuDropDown.profileOption);
     userProfilePage = new UserProfilePage(page);
     await userProfilePage.waitLoaded();
-    await userProfilePage.getUserInfo();
     await userProfilePage.checkUserInfo(name, lastName);
     // delete user
     await menuDropDown.clickMenu();

@@ -1,16 +1,19 @@
 import { expect, test } from "@playwright/test";
 import WelcomePage from "../../src/pageObjects/welcomePage/WelcomePage.js";
-import RegistrationPopup from "../../src/pageObjects/components/RegistrationPopup.js";
 import MenuDropDown from "../../src/pageObjects/components/MenuDropDown.js";
-import UserProfilePage from "../../src/pageObjects/userProfilePage/UserProfilePage.js";
-import SettingsPage from "../../src/pageObjects/settingsPage/SettingsPage.js";
+import StringUtils from "../../src/Utils/StringUtils.js";
 
 const name = "aqamay";
 const lastName = "aqarom";
-const email = "aqa-rom02@gmail.com";
+const email = `aqa-rom${StringUtils.randomNumber()}@gmail.com`;
 const password = "Password1";
 const repeatPassword = password;
-
+// empty values
+const nameEmpty = "";
+const lastNameEmpty = "";
+const emailEmpty = "";
+const passwordEmpty = "";
+const repeatPasswordEmpty = "";
 // mandatory fields errors
 const errorsMandatoryFields = [
   "Name required",
@@ -72,13 +75,12 @@ test.describe("Registration fuctionality", () => {
   test.beforeEach(async () => {
     await welcomePage.open();
     await welcomePage.waitLoaded();
-    await welcomePage.getRegistrationPopup();
-    registrationPopup = new RegistrationPopup(page);
+    registrationPopup = await welcomePage.openRegistrationPopup();
     await registrationPopup.waitLoaded();
   });
 
   // #1 Register User with correct data
-  test.only("Register User with correct data", async () => {
+  test("Register User with correct data", async () => {
     await registrationPopup.fillOutFields(
       name,
       lastName,
@@ -89,22 +91,30 @@ test.describe("Registration fuctionality", () => {
     await registrationPopup.registerUser();
     menuDropDown = new MenuDropDown(page);
     await menuDropDown.waitLoaded();
-    await menuDropDown.clickMenu();
-    await menuDropDown.clickMenuOption(menuDropDown.profileOption);
-    userProfilePage = new UserProfilePage(page);
+    await menuDropDown.openMenu();
+    userProfilePage = await menuDropDown.clickMenuOption(
+      menuDropDown.profileName
+    );
     await userProfilePage.waitLoaded();
     await userProfilePage.checkUserInfo(name, lastName);
     // delete user
-    await menuDropDown.clickMenu();
-    await menuDropDown.clickMenuOption(menuDropDown.settingsOption);
-    settingsPage = new SettingsPage(page);
+    await menuDropDown.openMenu();
+    settingsPage = await menuDropDown.clickMenuOption(
+      menuDropDown.settingsName
+    );
     await settingsPage.waitLoaded();
     await settingsPage.deleteUser();
   });
 
   // // #2 Fields are mandatory
   test("Fields are mandatory", async () => {
-    await registrationPopup.clickFields();
+    await registrationPopup.fillOutFields(
+      nameEmpty,
+      lastNameEmpty,
+      emailEmpty,
+      passwordEmpty,
+      repeatPasswordEmpty
+    );
     const actualErrorsText = await registrationPopup.getErrorsText();
     registrationPopup.checkErrorsText(actualErrorsText, errorsMandatoryFields);
   });

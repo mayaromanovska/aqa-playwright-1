@@ -9,11 +9,7 @@ export default class UserProfilePage extends BasePage {
     this.userInfoField = page.locator("p.profile_name.display-4");
   }
 
-  getUserInfo() {
-    return this.userInfoField;
-  }
-
   async checkUserInfo(name, lastName) {
-    await expect(this.getUserInfo()).toHaveText(name + " " + lastName);
+    await expect(this.userInfoField).toHaveText(name + " " + lastName);
   }
 }

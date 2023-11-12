@@ -1,4 +1,5 @@
 import BasePage from "../BasePage.js";
+import RegistrationPopup from "../components/RegistrationPopup.js";
 import { expect } from "@playwright/test";
 
 export default class WelcomePage extends BasePage {
@@ -11,11 +12,12 @@ export default class WelcomePage extends BasePage {
     this.registrationPopup = page.locator("div.modal-content");
   }
 
-  async getRegistrationPopup() {
+  async openRegistrationPopup() {
     await this.signinButton.click();
     await expect(
       this.registrationPopup,
       "Registration popup should be visible"
     ).toBeVisible();
+    return new RegistrationPopup(this._page);
   }
 }

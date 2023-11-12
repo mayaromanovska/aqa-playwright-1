@@ -8,7 +8,6 @@ export default class RegistrationPopup extends BaseComponent {
   passwordInput;
   repeatPasswordInput;
   registerButton;
-  actualErrorsText = [];
   errors;
 
   constructor(page) {
@@ -37,20 +36,13 @@ export default class RegistrationPopup extends BaseComponent {
     await expect(this.page).toHaveURL("/panel/garage");
   }
 
-  async clickFields() {
-    await this.nameInput.click();
-    await this.lastNameInput.click();
-    await this.emailInput.click();
-    await this.passwordInput.click();
-    await this.repeatPasswordInput.click();
-    await this.repeatPasswordInput.blur();
-  }
   async getErrorsText() {
+    let actualErrorsText = [];
     for (const errorItem of await this.errors.all()) {
       const text = await errorItem.innerText();
-      this.actualErrorsText.push(text);
+      actualErrorsText.push(text);
     }
-    return this.actualErrorsText;
+    return actualErrorsText;
   }
   async checkErrorsText(actualErrorsText, expectedErrorsText) {
     await expect(actualErrorsText).toEqual(expectedErrorsText);

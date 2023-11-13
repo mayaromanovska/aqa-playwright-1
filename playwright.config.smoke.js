@@ -1,7 +1,6 @@
 // @ts-check
 import { defineConfig, devices } from "@playwright/test";
 import { config as testConfig } from "./config/config.js";
-
 /**
  * Read environment variables from file.
  * https://github.com/motdotla/dotenv
@@ -11,12 +10,13 @@ import { config as testConfig } from "./config/config.js";
 /**
  * @see https://playwright.dev/docs/test-configuration
  */
+
 const config = defineConfig({
   // testDir: './tests',
   testMatch: "tests/**/*.spec.js",
   globalSetup: "./globalSetup",
   globalTeardown: "./globalTeardown",
-  // grep: /@smoke/,
+  grep: /@smoke/,
   timeout: 360_000,
   /* Run tests in files in parallel */
   fullyParallel: false,
@@ -41,7 +41,7 @@ const config = defineConfig({
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: "on-first-retry",
     launchOptions: {
-      slowMo: 1000,
+      // slowMo: 1000
     },
   },
 
@@ -56,15 +56,15 @@ const config = defineConfig({
       use: { ...devices["Desktop Chrome"] },
       dependencies: ["setup"],
     },
-
+    //
     // {
-    //   name: "firefox",
-    //   use: { ...devices["Desktop Firefox"] },
+    //   name: 'firefox',
+    //   use: { ...devices['Desktop Firefox'] },
     // },
-
+    //
     // {
-    //   name: "webkit",
-    //   use: { ...devices["Desktop Safari"] },
+    //   name: 'webkit',
+    //   use: { ...devices['Desktop Safari'] },
     // },
 
     /* Test against mobile viewports. */

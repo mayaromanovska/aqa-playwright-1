@@ -80,7 +80,7 @@ test.describe("Registration fuctionality", () => {
   });
 
   // #1 Register User with correct data
-  test("Register User with correct data", async () => {
+  test("Register User with correct data @regression", async () => {
     await registrationPopup.fillOutFields(
       name,
       lastName,
@@ -107,7 +107,7 @@ test.describe("Registration fuctionality", () => {
   });
 
   // // #2 Fields are mandatory
-  test("Fields are mandatory", async () => {
+  test("Fields are mandatory @smoke", async () => {
     await registrationPopup.fillOutFields(
       nameEmpty,
       lastNameEmpty,

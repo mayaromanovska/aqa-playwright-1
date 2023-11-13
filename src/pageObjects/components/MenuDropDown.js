@@ -25,16 +25,15 @@ export default class MenuDropDown extends BaseComponent {
     await this.myProfileDropDown.click();
   }
 
-  async clickMenuOption(optionName) {
-    if (optionName == this.profileName) {
-      await this.profileOption.click();
-      await expect(this._page).toHaveURL("/panel/profile");
-      return new UserProfilePage(this._page);
-    }
-    if (optionName == this.settingsName) {
-      await this.settingsOption.click();
-      await expect(this._page).toHaveURL("/panel/settings");
-      return new SettingsPage(this._page);
-    }
+  async clickProfileOption(optionName) {
+    await this.profileOption.click();
+    await expect(this._page).toHaveURL("/panel/profile");
+    return new UserProfilePage(this._page);
+  }
+
+  async clickSettingsOption(optionName) {
+    await this.settingsOption.click();
+    await expect(this._page).toHaveURL("/panel/settings");
+    return new SettingsPage(this._page);
   }
 }

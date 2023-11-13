@@ -92,14 +92,14 @@ test.describe("Registration fuctionality", () => {
     menuDropDown = new MenuDropDown(page);
     await menuDropDown.waitLoaded();
     await menuDropDown.openMenu();
-    userProfilePage = await menuDropDown.clickMenuOption(
+    userProfilePage = await menuDropDown.clickProfileOption(
       menuDropDown.profileName
     );
     await userProfilePage.waitLoaded();
     await userProfilePage.checkUserInfo(name, lastName);
     // delete user
     await menuDropDown.openMenu();
-    settingsPage = await menuDropDown.clickMenuOption(
+    settingsPage = await menuDropDown.clickSettingsOption(
       menuDropDown.settingsName
     );
     await settingsPage.waitLoaded();
